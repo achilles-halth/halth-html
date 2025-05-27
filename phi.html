@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaltH - A Better Digital Claiming Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --forest: #2A5351;
+            --deep: #1F3534;
+            --mint: #BACECB;
+            --sun: #F7CD66;
+            --black: #000000;
+            --charcoal: #4E4E4E;
+            --grey-4: #989898;
+            --grey-3: #CBCBCB;
+            --grey-2: #E6E6E6;
+            --grey-1: #EFEFEF;
+            --white: #FFFFFF;
+            --canary: #FFFFF2;
+            --stone: #F3F0EC;
+            --pink: #EFD8DC;
+            --navy: #46527A;
+            --maroon: #7A414C;
+            --success: #358A3D;
+            --success-2: #D4E9D7;
+            --error: #CE473E;
+            --error-2: #F2D4D2;
+        }
+
+        body {
+            font-family: 'Helvetica Neue';
+            line-height: 1.6;
+            color: var(--charcoal);
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--forest) 0%, var(--deep) 100%);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .hpc-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--white);
+            color: var(--forest);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .nav a {
+            color: var(--forest);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .nav a:hover {
+            background: var(--mint);
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--forest);
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 700;
+        }
+
+        /* Approval Rating Section */
+        .approval-section {
+            background: var(--stone);
+            text-align: center;
+        }
+
+        .approval-number {
+            font-size: 4rem;
+            color: var(--forest);
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .testimonial {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px auto;
+            max-width: 800px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        /* Leadership Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .team-member h3 {
+            color: var(--forest);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .team-member .role {
+            color: var(--sun);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .team-member .experience {
+            color: var(--charcoal);
+            font-size: 0.9rem;
+        }
+
+        .team-photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 12px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--mint);
+        }
+
+        .progress-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .progress-item {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .progress-item .icon {
+            font-size: 3rem;
+            color: var(--forest);
+            margin-bottom: 20px;
+            width: 100px;
+            height: 100px;
+        }
+
+        .progress-item h3 {
+            color: var(--forest);
+            margin-bottom: 15px;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--sun);
+            transform: translateY(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+            min-width: 150px;
+        }
+
+        .timeline-item.current {
+            background: var(--sun);
+            color: var(--forest);
+            font-weight: 600;
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--forest);
+            margin-bottom: 10px;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .feature-card h3 {
+            color: var(--forest);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card .subtitle {
+            color: var(--sun);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Benefits Section */
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .benefit-icon {
+            background: var(--mint);
+            color: var(--forest);
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h4 {
+            color: var(--forest);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Integrations */
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .integration-item {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .integration-status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .status-active {
+            background: var(--success-2);
+            color: var(--success);
+        }
+
+        .status-coming {
+            background: var(--sun);
+            color: var(--forest);
+        }
+
+        /* Health Insurers Grid */
+        .insurers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .insurer-logo {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--forest);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .contact-section .section-title {
+            color: var(--white);
+        }
+
+        .cta-button {
+            background: var(--sun);
+            color: var(--forest);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 30px;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* FAQ Section Styles */
+.faq-section {
+    background: var(--grey-1);
+}
+
+.faq-category-wrapper {
+    background: var(--white);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.faq-category-wrapper:hover {
+    box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+}
+
+.faq-category-header {
+    padding: 25px 30px;
+    background: var(--forest);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.faq-category-header:hover {
+    background: var(--deep);
+}
+
+.faq-category-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.chevron {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+    color: var(--white);
+}
+
+.faq-category-header.active .chevron {
+    transform: rotate(180deg);
+}
+
+.faq-category-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.3s ease;
+    padding: 0 30px;
+}
+
+.faq-category-content.active {
+    max-height: 2000px;
+    padding: 20px 30px 30px 30px;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--grey-2);
+    margin-bottom: 0;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.faq-question-header:hover {
+    color: var(--forest);
+}
+
+.faq-question {
+    font-weight: 600;
+    color: var(--forest);
+    font-size: 1.1rem;
+    margin-right: 20px;
+    flex: 1;
+}
+
+.chevron-small {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+    color: var(--forest);
+    flex-shrink: 0;
+}
+
+.faq-question-header.active .chevron-small {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.2s ease;
+    color: var(--charcoal);
+    line-height: 1.6;
+    padding: 0;
+}
+
+.faq-answer.active {
+    max-height: 500px;
+    padding-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .faq-category-header {
+        padding: 20px;
+    }
+    
+    .faq-category-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .faq-category-content {
+        padding: 0 20px;
+    }
+    
+    .faq-category-content.active {
+        padding: 15px 20px 25px 20px;
+    }
+    
+    .faq-question-header {
+        padding: 15px 0;
+    }
+    
+    .faq-question {
+        font-size: 1rem;
+        margin-right: 15px;
+    }
+    
+    .chevron {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .chevron-small {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-category-header {
+        padding: 15px;
+    }
+    
+    .faq-category-content.active {
+        padding: 10px 15px 20px 15px;
+    }
+    
+    .faq-question {
+        font-size: 0.95rem;
+    }
+}
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .timeline {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .timeline::before {
+                display: none;
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .approval-number {
+                font-size: 3rem;
+            }
+        }
+
+        /* Dashboard Preview */
+        .dashboard-preview {
+            background: var(--deep);
+            padding: 40px;
+            border-radius: 8px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .dashboard-preview h3 {
+            color: var(--mint);
+            margin-bottom: 20px;
+        }
+
+        .dashboard-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .dashboard-feature {
+            background: var(--mint);
+            color: var(--forest);
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .timeline-horizontal {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            margin: 60px 0 40px 0;
+        }
+
+        .timeline-horizontal::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #f5e3a1;
+            z-index: 0;
+        }
+
+        .timeline-event {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .timeline-date {
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .timeline-circle {
+            width: 32px;
+            height: 32px;
+            background: #ffe082;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            z-index: 1;
+            margin-bottom: 10px;
+            box-shadow: 0 0 0 2px #f5e3a1;
+        }
+
+        .timeline-desc {
+            margin-top: 0;
+            text-align: center;
+            font-size: 1.05rem;
+            color: #333;
+        }
+
+        .timeline-event.current .timeline-desc {
+            font-weight: bold;
+        }
+
+        .timeline-event.current .timeline-circle {
+            border-color: #fbc02d;
+            box-shadow: 0 0 0 4px #fbc02d;
+        }
+
+        .timeline-arrow {
+            width: 0;
+            height: 0;
+            border-left: 32px solid transparent;
+            border-right: 32px solid transparent;
+            border-top: 32px solid #ffe082;
+            position: absolute;
+            top: -48px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .highlight {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .pms-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 8px auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <h1>A better digital claiming experience for health insurers and their members</h1>
+            <p class="subtitle">Streamlining healthcare payments with modern technology</p>
+            <div class="hpc-badge">
+                ✓ HealthPoint Certified
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-container">
+                <a href="#approval">Feedback</a>
+                <a href="#progress">Progress</a>
+                <a href="#timeline">Timeline</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#benefits">Benefits</a>
+                <a href="#team">Team</a>
+                <a href="#contact">Contact</a>
+                <a href="#faq">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Approval Rating Section -->
+    <section id="approval" class="section approval-section">
+        <div class="container">
+            <div class="approval-number">83%</div>
+            <h2 class="section-title">Approval Rating from all Health Insurers</h2>
+            <div class="testimonial">
+                "I loved the HaltH presentation. It was clear that they had done their research, they knew the audience and curated content to match. Excellent storytelling backed with data, very impressed with how this session wrapped up the day too."
+            </div>
+            <div class="testimonial">
+                "I found the concept of allowing a patient/member the ability to perform a quote at the same time of making an online booking interesting."
+            </div>
+            <p style="margin-top: 20px; font-weight: 600;">From HPC Insurer Forum (Feb, 2025)</p>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section id="progress" class="section progress-section">
+        <div class="container">
+            <h2 class="section-title">Since the forum, we have:</h2>
+            <div class="progress-items">
+                <div class="progress-item">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c48e6efccb98fee21711_Health_Point_Claims_Certification-removebg-preview.png" class="icon"></img>
+                    <h3>HealthPoint Certified</h3>
+                    <p>Successfully certified by HealthPoint to seamlessly integrate with your quoting and claiming</p>
+                </div>
+                <div class="progress-item">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c28c76c3b033ca61de3e_noun-7804386.png" class="icon"></img>
+                    <h3>PMS Integrations Complete</h3>
+                    <p>Completed integrations with Australia's top PMS partners, with many more to come</p>
+                </div>
+                <div class="progress-item">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c28c33dbee41817aa004_noun-6396693.png" class="icon"></img>
+                    <h3>Rapid Network Growth</h3>
+                    <p>Growing into a network of 200k+ providers and 10m+ members</p>
+                </div>
+                <div class="progress-item">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c28ce5b4f43962957ca4_noun-7204954.png" class="icon"></img>
+                    <h3>100% Payment Success</h3>
+                    <p>Achieved 100% success rate on all payments transactions processed, safely and securely</p>
+                </div>
+            </div>
+
+            <!-- PMS Integrations -->
+<h3 style="margin-top: 60px; margin-bottom: 30px; text-align: center; color: var(--forest); font-size: 1.8rem;">PMS Partner Integrations</h3>
+<div class="integrations-grid">
+    <div class="integration-item">
+        <div class="integration-status status-active">Active</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8c46efccb98fee46523_cliniko_logo--dark.png" alt="Nookal logo" class="pms-logo">
+        <strong>Cliniko</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-active">Active</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833ca883cd2eb76fd031581_95e4ffd3-3a79-4cbc-9311-b9c59cb8c755.png" alt="Nookal logo" class="pms-logo">
+        <strong>Nookal</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-active">Active</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8b6da7d8cb8cd9b1f77_halaxy.png" alt="Halaxy logo" class="pms-logo">
+        <strong>Halaxy</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-active">Active</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8b618c3ca29e2757c2a_splose.png" alt="Splose logo" class="pms-logo">
+        <strong>Splose</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-coming">Coming Soon</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8b7c8afbaa02ac16bdf_bestpractice.png" alt="Best Practice logo" class="pms-logo">
+        <strong>Best Practice</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-coming">Coming Soon</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8b60700ad0f0d619fbb_zanda.png" alt="Zanda logo" class="pms-logo">
+        <strong>Zanda</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-coming">Coming Soon</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8b6dbfd4a18bd7695ce_coreplus.png" alt="CorePlus logo" class="pms-logo">
+        <strong>CorePlus</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-coming">Coming Soon</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8b68a10ff4014b449f1_pracsuite.jpeg" alt="PracSuite logo" class="pms-logo">
+        <strong>PracSuite</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-coming">Coming Soon</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8b68e547d803bcd9153_acuity.png" alt="Acuity Scheduling logo" class="pms-logo">
+        <strong>Acuity Scheduling</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-coming">Coming Soon</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8b65d5b094c1a4f3fe4_cliniccloud.png" alt="Clinic Cloud logo" class="pms-logo">
+        <strong>Clinic Cloud</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-coming">Coming Soon</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8b6b293c099d9205473_sqaurespace.png" alt="Squarespace logo" class="pms-logo">
+        <strong>Square Space</strong>
+    </div>
+    <div class="integration-item">
+        <div class="integration-status status-coming">Coming Soon</div>
+        <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/6833c8b6d24c86c11211d69e_calendly.png" alt="Calendly logo" class="pms-logo">
+        <strong>Calendly</strong>
+    </div>
+</div>
+</div>
+</section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="section">
+        <div class="container">
+            <h2 class="section-title" style="text-align:center;">What's next</h2>
+            <div class="timeline-horizontal">
+                <div class="timeline-event">
+                    <div class="timeline-date">July 2024</div>
+                    <div class="timeline-circle"></div>
+                    <div class="timeline-desc">HaltH<br>Launches</div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-date">Feb '25</div>
+                    <div class="timeline-circle"></div>
+                    <div class="timeline-desc">Present to Health<br>Insurer Forum</div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-date">May '25</div>
+                    <div class="timeline-circle"></div>
+                    <div class="timeline-desc">HaltH Certified by<br>HealthPoint</div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-date">May '25</div>
+                    <div class="timeline-circle"></div>
+                    <div class="timeline-desc">Email comms<br>from HealthPoint</div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-date">June '25</div>
+                    <div class="timeline-circle"></div>
+                    <div class="timeline-desc"><strong>You review and<br>approve</strong></div>
+                    <div class="timeline-arrow"></div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-date">June '25</div>
+                    <div class="timeline-circle"></div>
+                    <div class="timeline-desc">Your fund launches in HaltH</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>For Members</h3>
+                    <div class="subtitle">Book, manage, pay & see funding</div>
+                    <p>Members can easily book appointments, manage their healthcare needs, make payments, and see their funding eligibility in real-time through our integrated platform.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>For Providers</h3>
+                    <div class="subtitle">Digital bookings and payments are growing</div>
+                    <p>Healthcare providers benefit from streamlined digital booking systems and secure payment processing, reducing manual administration and improving efficiency.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>For Health Insurers</h3>
+                    <div class="subtitle">Enhanced data and reduced manual claiming</div>
+                    <p>Health insurers gain access to better data insights, reduced manual claim processing, and improved member satisfaction through our comprehensive platform.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="section">
+        <div class="container">
+            <h2 class="section-title">Benefits to Health Insurers</h2>
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <div class="benefit-content">
+                        <h4>Provider ID Verification</h4>
+                        <p>Comprehensive checks to verify providers that reduces admin and fraud</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-content">
+                        <h4>Two-Factor Authentication (2FA)</h4>
+                        <p>After each appointment for 100% (digital) signature capture, shared back with each Health Insurer</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-content">
+                        <h4>Increase in Digital Claims</h4>
+                        <p>Reducing costly manual admin and mistakes</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-content">
+                        <h4>Increased Data Sharing</h4>
+                        <p>Enhanced data shared back from a growing network of providers</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-content">
+                        <h4>Brand Awareness</h4>
+                        <p>Increase insurer brand awareness every day to thousands of people with / without health insurance</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-content">
+                        <h4>Member Referrals</h4>
+                        <p>Get referrals to members who do not have health insurance</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Features -->
+            <div class="dashboard-preview">
+                <h3>Advanced Analytics & Insights</h3>
+                <div class="dashboard-features">
+                    <div class="dashboard-feature">
+                        Future Claim Forecasting to improve revenue and payout visibility
+                    </div>
+                    <div class="dashboard-feature">
+                        Non-Funded Appointment Data to uncover out-of-pocket trends and gaps in coverage
+                    </div>
+                    <div class="dashboard-feature">
+                        Real-Time Claims Auditing to validate claim submissions against fund rules
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Leadership Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/67aacf0f5ded60cfce7bbe9a_nick.png" alt="Nick Cloete" class="team-photo">
+                    <h3>Nick Cloete</h3>
+                    <div class="role">Founder</div>
+                    <div class="experience">Founder of Kounta, TSX/NYSE Exec</div>
+                </div>
+                <div class="team-member">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/67aacef67af47ae217b493b7_image.png" alt="Nate Adamson" class="team-photo">
+                    <h3>Nate Adamson</h3>
+                    <div class="role">Co-Founder</div>
+                    <div class="experience">Healthcare Innovator</div>
+                </div>
+                <div class="team-member">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/67aacf4bc47eafc45ad3545f_image%20106.png" alt="Michelle Cloete" class="team-photo">
+                    <h3>Michelle Cloete</h3>
+                    <div class="role">CFO</div>
+                    <div class="experience">Certified Health Practitioner</div>
+                </div>
+                <div class="team-member">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/67aacef9501b4a3cc966fcb7_Taylar.png" alt="Taylar Keast" class="team-photo">
+                    <h3>Taylar Keast</h3>
+                    <div class="role">Product & Tech Lead</div>
+                    <div class="experience">Fintech & Enterprise</div>
+                </div>
+                <div class="team-member">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/67aacef5c37bf786c0866a75_Malte.png" alt="Malte Feller" class="team-photo">
+                    <h3>Malte Feller</h3>
+                    <div class="role">Payments & Fintech</div>
+                    <div class="experience">COO @ Afterpay</div>
+                </div>
+                <div class="team-member">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/67aacef672bf7807fa2ddd19_image%20123.png" alt="Joshua Bell" class="team-photo">
+                    <h3>Joshua Bell</h3>
+                    <div class="role">General Counsel</div>
+                    <div class="experience">Ex Hamilton Locke</div>
+                </div>
+                <div class="team-member">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/67aacf81cb76c683582f812a_paul.png" alt="Paul Alexandrou" class="team-photo">
+                    <h3>Paul Alexandrou</h3>
+                    <div class="role">Brand Strategy</div>
+                    <div class="experience">ex Chief Brand Officer Kahoot</div>
+                </div>
+                <div class="team-member">
+                    <img src="https://cdn.prod.website-files.com/6386579f58cb066ceb4c6d53/67aacef5dddba8d5a7784ae2_damien.png" alt="Damien Hughes" class="team-photo">
+                    <h3>Damien Hughes</h3>
+                    <div class="role">Product Strategy</div>
+                    <div class="experience">Product Strategy Expert</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+<section id="faq" class="section faq-section">
+    <div class="container">
+        
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <!-- Insurer Category -->
+        <div class="faq-category-wrapper">
+            <div class="faq-category-header" data-category="insurer">
+                <h3>For Insurers</h3>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                </svg>
+            </div>
+            <div class="faq-category-content" id="insurer">
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Why should your fund be on HaltH?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        HaltH is purpose-built to help private health insurers thrive in a digital-first Allied Health ecosystem. By joining the platform, your fund can unlock transformative benefits across claims, engagement, insights, and brand positioning — all while reducing administrative overhead.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Does HaltH cost more than what insurers pay today to process claims?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        No — for standard claim processing, there is no additional cost beyond what insurers already pay today. For insurers looking to go further, HaltH offers a suite of optional advanced features that unlock deeper visibility, smarter automation, and greater member impact.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">How do we integrate?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        HaltH connects to all major private health insurers through an existing middleware platform that's already integrated with the insurer ecosystem. This allows us to offer real-time eligibility checks, digital claim submission, and secure data exchange — with minimal lift on your side.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">How is fraud minimized?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        HaltH is designed from the ground up to reduce fraud, leakage, and misuse in the Allied Health claims process. Fraud prevention is embedded at multiple levels including verified member data, Two-Factor Authentication (2FA), provider identity verification, and automated rules-based claim submission.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">What data do we get?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        As a health fund on HaltH, you get access to transparent, real-time data at the member level including booking and attendance data, claim activity and payment flows, member engagement signals, out-of-pocket insights, and aggregated usage trends.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">What health modalities are supported at launch?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        HaltH is launching with a strong focus on Australia's most in-demand, health fund–supported Allied Health services including Physiotherapy, Psychology, Podiatry, Speech Pathology, Occupational Therapy, Osteopathy, Chiropractic, Dietetics, Exercise Physiology, and Optometry.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- General Category -->
+        <div class="faq-category-wrapper">
+            <div class="faq-category-header" data-category="general">
+                <h3>General</h3>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                </svg>
+            </div>
+            <div class="faq-category-content" id="general">
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">What is HaltH?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        HaltH is a platform for online bookings, payments, and health fund claims, purpose-built for Allied Health in Australia. 
+
+It connects members, providers, and private health insurers, making the entire experience — from appointment to reimbursement — easier, faster, and more transparent.
+
+All transactions on HaltH are powered by secure, best-in-class payment infrastructure that protects health and financial data to the highest global standards. We work closely with Australia’s leading health insurers, connecting through secure APIs developed either by our team or via trusted funding partners. This enables real-time eligibility checks, automatic claim submissions, and seamless, paperless experiences for all users.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Who is HaltH for?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        HaltH is for everyone involved in the Allied Health ecosystem — from clients (members) booking care, to practice and clinic owners (providers) delivering it, and private health insurers (PHIs) helping fund it. Each group benefits from a more seamless, transparent experience.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">How does it work?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Members book appointments, know their health fund support upfront, and handle payments digitally. Providers get bookings with reduced admin, and insurers connect for real-time, verified funding. We're a global leader in secure payments, to power all transactions on the HaltH platform.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Where is HaltH available?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        HaltH is currently available to Allied Health providers and their clients (members) across Australia. We're focused on building a strong national network, with initial traction in metro and regional areas where demand for accessible, funded care is high.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Does HaltH store any health data?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        No — HaltH does not store any medical or clinical health data. We're not a PMS, medical record system, or clinical app. Our platform is designed purely to manage bookings, payments, and health fund claims — and to do so securely. We store only the minimum personal information required to verify a booking, process a claim, or facilitate payment.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">How safe and secure is HaltH?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Extremely. HaltH is secure by design and engineered to meet — and exceed — the highest global compliance standards in healthcare, payments, and data privacy. We use end-to-end encryption, tokenized payment data, and strict role-based access controls to protect member and provider information at every step.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Is HaltH compliant with privacy laws?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Yes — privacy is fundamental to how HaltH operates. We comply with all relevant Australian privacy laws, including the Privacy Act 1988 and the Australian Privacy Principles (APPs), which govern the handling of personal and health information.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Member Category -->
+        <div class="faq-category-wrapper">
+            <div class="faq-category-header" data-category="member">
+                <h3>For Members</h3>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                </svg>
+            </div>
+            <div class="faq-category-content" id="member">
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Do I need to be a HaltH customer to make a booking?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Nope — you don't need to sign up or create an account to make a booking. Just enter your health fund and payment details when prompted, and you're good to go. It's quick, secure, and fully digital — designed to get you booked in as quick as possible.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Can I claim and pay without creating an account?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Yes — you don't need to create a HaltH account to claim or pay. Whether you're booking in advance or settling up after your appointment, you can simply enter your health fund and payment details to complete the process.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">When will I be asked for my health fund details?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        HaltH will prompt you to enter your health fund details at key moments — like when you're booking an appointment, making a payment, or managing your profile within the app. We only ask when it's needed to confirm your eligibility and help process your claim.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">How do I know how much of my appointment is covered?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Once you enter your health fund details, HaltH instantly shows you an upfront estimate of how much your fund is likely to cover — and what, if anything, you'll need to pay. It's all about transparency, so you can book with confidence and avoid unexpected costs.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">What are the benefits of using the HaltH app?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        The HaltH app puts everything you need to manage your Allied Health care in one place. You can book and reschedule appointments, add and update payment methods, track how much funding you have left, and see your full health team in one view.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">How is my private health insurance data shared?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Only what's absolutely necessary is shared — and only with the right parties. We securely share your member number, claim amount, and basic booking details with your health provider and private health insurer so your claim can be processed smoothly. That's it.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">How is my payment data handled?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Your payment details are encrypted and tokenised, meaning they're converted into secure codes and never stored or shared in their raw form. We use world-class payments infrastructure to process every transaction — the same technology trusted by leading financial institutions.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Is it safe to use HaltH?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Not only do we think so, but also the growing network of providers and members. We use best-in-class payment and data protection tech to make sure your health and payment info stays safe. This ensures your financial data is protected to the highest international standards.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Provider Category -->
+        <div class="faq-category-wrapper">
+            <div class="faq-category-header" data-category="provider">
+                <h3>For Providers</h3>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                </svg>
+            </div>
+            <div class="faq-category-content" id="provider">
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">What's in it for providers?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        HaltH helps providers grow, streamline, and modernise their practice — all while delivering a better experience for their clients. With HaltH, providers get more bookings, fewer no-shows, faster automated payments, less admin, and happier clients who know what they're covered for before they walk in.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">How do I get started?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        It's easy — just sign up for free and start engaging better with your clients straight away. There are no setup fees, no terminal rentals or long contracts. You only pay once you start getting value from HaltH — typically through transaction-based fees tied to real bookings and claims.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">How are payments handled?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Payments are processed automatically and sent straight to your account through HaltH's integrated payment platform — no terminals, no chasing, no gaps. Clients enter their details once, and payments are settled securely and on time after each appointment.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Does HaltH check health fund details?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Yes — HaltH verifies a member's health fund eligibility upfront by generating real-time rebate estimates or quotes before they confirm their booking. This helps ensure everyone knows what's covered and what the out-of-pocket cost will be — no surprises.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Can I integrate HaltH with my current PMS?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Yes — HaltH is designed to integrate smoothly with your existing workflows. We've already built — and continue to build — integrations with popular Practice Management Systems (PMS) and other tools providers rely on.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question-header">
+                        <span class="faq-question">How do I connect my PMS to HaltH?</span>
+                        <svg class="chevron-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        It takes just minutes. To connect your Practice Management System (PMS) to HaltH, simply paste your API key — usually found in your PMS settings into HaltH. That's it. No complex setup, no downtime, and no technical headaches.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <h2 class="section-title">Get Started with HaltH</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">We welcome an online or in-person meeting to clarify and discuss anything you'd like</p>
+            <a href="#" class="cta-button">Book a Meeting</a>
+            <p style="margin-top: 30px;">Or email us directly to get started</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--deep); color: var(--white); padding: 40px 0; text-align: center;">
+        <div class="container">
+            <h3 style="color: var(--sun); margin-bottom: 20px;">HaltH</h3>
+            <p style="opacity: 0.8;">A better digital claiming experience for health insurers and their members</p>
+            <div style="margin-top: 20px;">
+                <div style="background: var(--mint); color: var(--forest); padding: 10px 20px; border-radius: 8px; display: inline-block; font-weight: 600;">
+                    ✓ HealthPoint Certified
+                </div>
+            </div>
+            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.7;">
+                This document is strictly confidential and the exclusive intellectual property of HaltH.
+            </p>
+        </div>
+    </footer>
+    <script>
+        // FAQ functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category toggle functionality
+            const categoryHeaders = document.querySelectorAll('.faq-category-header');
+            
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    const content = document.getElementById(category);
+                    const isActive = this.classList.contains('active');
+                    
+                    // Close all categories
+                    categoryHeaders.forEach(h => h.classList.remove('active'));
+                    document.querySelectorAll('.faq-category-content').forEach(c => c.classList.remove('active'));
+                    
+                    // Open clicked category if it wasn't already active
+                    if (!isActive) {
+                        this.classList.add('active');
+                        content.classList.add('active');
+                    }
+                });
+            });
+            
+            // Question toggle functionality
+            const questionHeaders = document.querySelectorAll('.faq-question-header');
+            
+            questionHeaders.forEach(header => {
+                header.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent category toggle
+                    
+                    const answer = this.nextElementSibling;
+                    const isActive = this.classList.contains('active');
+                    
+                    // Close all answers in this category
+                    const category = this.closest('.faq-category-content');
+                    category.querySelectorAll('.faq-question-header').forEach(h => h.classList.remove('active'));
+                    category.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('active'));
+                    
+                    // Open clicked answer if it wasn't already active
+                    if (!isActive) {
+                        this.classList.add('active');
+                        answer.classList.add('active');
+                    }
+                });
+            });
+        });
+        </script>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add active state to navigation based on scroll position
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.background = '';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.background = 'var(--mint)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
